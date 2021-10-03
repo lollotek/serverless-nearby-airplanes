@@ -4,8 +4,17 @@
   "description": "serverless function for near airplanes",
   "main": "index.js",
   "scripts": {
+    "dev": "netlify functions:serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "lboasso",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@netlify/functions": "^0.7.2",
+    "axios": "^0.22.0",
+    "node-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.3"
+  }
 }
