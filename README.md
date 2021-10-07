@@ -16,3 +16,5 @@ https://docs.netlify.com/functions/build-with-javascript/#unbundled-javascript-f
 
 # debug:
 instruction at: https://cli.netlify.com/vscode/#debugging
+run `npm run dev-debug`
+Open `chrome://inspect` in a cromium browser

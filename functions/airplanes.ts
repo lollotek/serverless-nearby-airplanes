@@ -30,8 +30,9 @@ const handler: Handler = async (event, _) => {
       // Find nearest plane in array
       const nearest = states[argMin(states, dist)];
       // Convert State array to JSON
-      const body = JSON.stringify(jsonifyPlaneState(nearest));
-      // res.status(200).send(body);
+      const planeJsonData = jsonifyPlaneState(nearest);
+      const body = JSON.stringify({callsign: planeJsonData.callsign});
+      console.log('response', body);
       return  { statusCode: 200, body: body};
     })
     .catch(err => {

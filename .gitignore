@@ -1,5 +1,5 @@
 functions/airplanes.js
-
+.netlify/
 # Logs
 logs
 *.log
