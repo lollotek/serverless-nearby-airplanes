@@ -7,11 +7,13 @@ const API_ENDPOINT = 'https://opensky-network.org/api'
 const handler: Handler = async (event, _) => {
   
   // Only allow POST
-  if (event.httpMethod !== "POST") {
+  if (event.httpMethod !== "GET") {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
   
-  const {latitude, longitude, range} = JSON.parse(event.body);
+  const {latitude, longitude, range} = event.queryStringParameters
+
+  // const {latitude, longitude, range} = JSON.parse(event.body);
   const validCoord = validCoordinates(latitude, longitude);
   if (!validCoord.valid) {
     return { statusCode: 400, body: validCoord.body };
