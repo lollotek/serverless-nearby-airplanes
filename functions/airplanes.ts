@@ -12,8 +12,9 @@ const handler: Handler = async (event, _) => {
   }
   
   // const {latitude, longitude, range} = event.queryStringParameters
-  const { LATITUDE, LOGITUDE, RANGE } = process.env;
-  const validCoord = validCoordinates(LATITUDE, LOGITUDE);
+  const { LATITUDE, LONGITUDE, RANGE } = process.env;
+  console.log('using params: ', LATITUDE, LONGITUDE, RANGE);
+  const validCoord = validCoordinates(LATITUDE, LONGITUDE);
   if (!validCoord.valid) {
     return { statusCode: 400, body: validCoord.body };
   }
@@ -28,7 +29,7 @@ const handler: Handler = async (event, _) => {
       let states = data.states;
       const dist = (state) => Math.sqrt((state[5]-lon)**2 + (state[6]-lat)**2);
       // if i found something..
-      if (states.length > 0){
+      if (states && states.length > 0){
         // Find nearest plane in array
         const nearest = states[argMin(states, dist)];
         // Convert State array to JSON
