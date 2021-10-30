@@ -11,19 +11,18 @@ const handler: Handler = async (event, _) => {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
   
-  const {latitude, longitude, range} = event.queryStringParameters
-
-  // const {latitude, longitude, range} = JSON.parse(event.body);
-  const validCoord = validCoordinates(latitude, longitude);
+  // const {latitude, longitude, range} = event.queryStringParameters
+  const { LATITUDE, LOGITUDE, RANGE } = process.env;
+  const validCoord = validCoordinates(LATITUDE, LOGITUDE);
   if (!validCoord.valid) {
     return { statusCode: 400, body: validCoord.body };
   }
   const lat = validCoord.body.lat
   const lon = validCoord.body.lon
 
-  console.log(`${API_ENDPOINT}/states/all?${openskyLatLonString(lat, lon, range)}`)
+  console.log(`${API_ENDPOINT}/states/all?${openskyLatLonString(lat, lon, RANGE)}`)
 
-  return fetch(`${API_ENDPOINT}/states/all?${openskyLatLonString(lat, lon, range)}`)
+  return fetch(`${API_ENDPOINT}/states/all?${openskyLatLonString(lat, lon, RANGE)}`)
     .then(response => response.json())
     .then((data: {states:Array<Array<string | number | boolean>>}) => {
       let states = data.states;
