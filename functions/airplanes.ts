@@ -21,9 +21,9 @@ const handler: Handler = async (event, _) => {
   const lat = validCoord.body.lat
   const lon = validCoord.body.lon
 
-  console.log(`${API_ENDPOINT}/states/all?${openskyLatLonString(lat, lon, RANGE)}`)
+  console.log(`${API_ENDPOINT}/states/all?${openskyLatLonString(lat, lon, parseFloat(RANGE))}`)
 
-  return fetch(`${API_ENDPOINT}/states/all?${openskyLatLonString(lat, lon, RANGE)}`)
+  return fetch(`${API_ENDPOINT}/states/all?${openskyLatLonString(lat, lon, parseFloat(RANGE))}`)
     .then(response => response.json())
     .then((data: {states:Array<Array<string | number | boolean>>}) => {
       let states = data.states;
