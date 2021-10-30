@@ -27,14 +27,19 @@ const handler: Handler = async (event, _) => {
     .then((data: {states:Array<Array<string | number | boolean>>}) => {
       let states = data.states;
       const dist = (state) => Math.sqrt((state[5]-lon)**2 + (state[6]-lat)**2);
-              
-      // Find nearest plane in array
-      const nearest = states[argMin(states, dist)];
-      // Convert State array to JSON
-      const planeJsonData = jsonifyPlaneState(nearest);
-      const body = JSON.stringify({callsign: planeJsonData.callsign});
-      console.log('response', body);
-      return  { statusCode: 200, body: body};
+      // if i found something..
+      if (states.length > 0){
+        // Find nearest plane in array
+        const nearest = states[argMin(states, dist)];
+        // Convert State array to JSON
+        const planeJsonData = jsonifyPlaneState(nearest);
+        const body = JSON.stringify({callsign: planeJsonData.callsign});
+        console.log('response', body);
+        return  { statusCode: 200, body: body};
+      }else{
+        // no airplanes
+        return  { statusCode: 204 };
+      }
     })
     .catch(err => {
         return  {
