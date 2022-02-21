@@ -11,19 +11,24 @@ const handler: Handler = async (event, _) => {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
   
-  // const {latitude, longitude, range} = event.queryStringParameters
+  const {paramLatitude, paramLongitude, paramRange} = event.queryStringParameters;
   const { LATITUDE, LONGITUDE, RANGE } = process.env;
-  console.log('using params: ', LATITUDE, LONGITUDE, RANGE);
-  const validCoord = validCoordinates(LATITUDE, LONGITUDE);
+
+  const latitude = paramLatitude ?? LATITUDE;
+  const longitude = paramLongitude ?? LONGITUDE;
+  const range = paramRange ?? RANGE;
+
+  console.log('using params: ', latitude, longitude, range);
+  const validCoord = validCoordinates(latitude, longitude);
   if (!validCoord.valid) {
     return { statusCode: 400, body: validCoord.body };
   }
   const lat = validCoord.body.lat
   const lon = validCoord.body.lon
 
-  console.log(`${API_ENDPOINT}/states/all?${openskyLatLonString(lat, lon, parseFloat(RANGE))}`)
+  console.log(`${API_ENDPOINT}/states/all?${openskyLatLonString(lat, lon, parseFloat(range))}`)
 
-  return fetch(`${API_ENDPOINT}/states/all?${openskyLatLonString(lat, lon, parseFloat(RANGE))}`)
+  return fetch(`${API_ENDPOINT}/states/all?${openskyLatLonString(lat, lon, parseFloat(range))}`)
     .then(response => response.json())
     .then((data: {states:Array<Array<string | number | boolean>>}) => {
       let states = data.states;
