@@ -36,7 +36,7 @@ const handler: Handler = async (event, _) => {
 
     console.log('RADAR: ', nearFlight);
     if (nearFlight){
-      return  { statusCode: 200, body: jsonifyPlaneState.stringify(nearFlight)};
+      return  { statusCode: 200, body: JSON.stringify(nearFlight)};
     }else{
       // no airplanes
       return  { statusCode: 204 };
