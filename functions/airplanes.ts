@@ -25,7 +25,7 @@ function haversineDistance(lat1, lon1, lat2, lon2) {
 const handler: Handler = async (event, _) => {
   try{
     const {latitude, longitude, range} = event.queryStringParameters;
-    let bounds = frApi.getBoundsByPoint(latitude, longitude, range);
+    let bounds = frApi.getBoundsByPoint(parseFloat(latitude), parseFloat(longitude), parseFloat(range)  * 1000);
     let flights = await frApi.getFlights(null, bounds);
     
     const flightsOnAir = flights.filter(flight => flight.altitude > 100 );
